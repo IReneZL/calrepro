@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install system guard and build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libseccomp2
+          python -m pip install --upgrade pip build
+      - name: Install CLI and replay profiles
+        run: |
+          python -m pip install -e .
+          for version in 11.1.0 14.0.1 14.1.0; do
+            python -m venv ".replay-$version"
+            ".replay-$version/bin/python" -m pip install --only-binary=:all: --index-url https://pypi.org/simple -r "profiles/ical-$version.lock"
+            calrepro env --profile "$version" --python "$PWD/.replay-$version/bin/python"
+          done
+      - name: Test and compile
+        run: |
+          python -m unittest discover -s tests -v
+          python -m compileall -q src tests
+      - name: Build and smoke-test installed wheel
+        run: |
+          python -m build
+          python -m venv /tmp/calrepro-wheel
+          /tmp/calrepro-wheel/bin/python -m pip install --no-deps dist/*.whl
+          cd /tmp
+          /tmp/calrepro-wheel/bin/calrepro version

@@ -1,0 +1,7 @@
+include README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md LICENSE
+recursive-include profiles *.lock
+recursive-include tests *.py *.ics
+recursive-include fixtures *.ics
+include THIRD_PARTY_NOTICES.md
+recursive-include licenses *.txt
+recursive-include .github *.md *.yml

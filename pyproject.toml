@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "calrepro"
+version = "0.1.0rc1"
+description = "Bounded local replay and UID-group reduction for selected ical parser failures"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "calrepro contributors"}]
+dependencies = []
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Testing",
+]
+
+[project.scripts]
+calrepro = "calrepro.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"share/calrepro/profiles" = ["profiles/*.lock"]
+"share/calrepro" = ["THIRD_PARTY_NOTICES.md"]
+"share/calrepro/licenses" = ["licenses/*.txt"]
