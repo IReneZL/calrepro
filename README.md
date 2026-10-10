@@ -141,5 +141,5 @@ issue remains open. No upstream implementation source is included.
 
 Development and verification instructions are in [CONTRIBUTING.md](CONTRIBUTING.md).
 The project is MIT-licensed; separately installed replay dependencies retain their
-own licenses, documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This checkout is a local release candidate, not a
-claim of publication, upstream endorsement, or production readiness.
+own licenses, documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This is an experimental public release candidate, not a claim of upstream
+endorsement or production readiness.
